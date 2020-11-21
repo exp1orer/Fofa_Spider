@@ -1,6 +1,7 @@
-import requests
 import aiohttp
 import asyncio
+import base64
+import requests
 import json
 from loguru import logger
 
@@ -45,22 +46,23 @@ async def check_url(url, output_format):
     try:
       async with session.get(url = url, timeout=5) as resp:
         text = await resp.text()
-        logger.info(url)
+        logger.success(url)
         if output_format == 'y' or output_format == 'N':
-          with open('result', 'a+') as f:
+          with open(filename, 'a+') as f:
             f.write(url+'\n')
     except Exception as e:
-      logger.info(url)
+      logger.warning(url)
       if output_format == 'N':
-        with open('result', 'a+') as f:
+        with open(filename, 'a+') as f:
           f.write(url+'\n')
 
 
 if __name__ == '__main__':
   banner()
-  api_url = input(">API：")
+  api = input(">API：")
+  filename = api[api.find('qbase64=') + 8:]
   output = input("请选择是否只输出存活url[y/N导出全部] ")
-  results = get_fofa(api_url)
+  results = get_fofa(api)
   loop = asyncio.get_event_loop()  # 获取当前事件循环, 如果没有则创建并将其设为当前时间循环
   try:
     if results: # 判断是否有url
