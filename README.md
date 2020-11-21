@@ -13,3 +13,7 @@
 
  **Usage：**
  python3 Fofa_Spider.py
+
+ 导出结果将以搜索的语法为文件名
+
+ ![](https://tva1.sinaimg.cn/large/0081Kckwgy1gkx8u3p1f7j31az0u0qv6.jpg)
